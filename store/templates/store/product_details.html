@@ -1,0 +1,36 @@
+{% extends "base_generic.html" %}
+{% block content %}
+  <div class="container">
+    <h2>{{ product.name }}</h2>
+    <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.name }}">
+    <p>Price: {{ product.price }}</p>
+    <p>Size: {{ product.size }}</p>
+    <p>Color: {{ product.color }}</p>
+    <p>Average Rating: {{ average_rating }}</p>
+
+    <h3>Reviews</h3>
+    <ul>
+      {% for review in reviews %}
+        <li>{{ review.user.username }}: {{ review.rating }} - {{ review.comment }}</li>
+      {% endfor %}
+    </ul>
+
+    {% if user.is_authenticated %}
+      <h4>Leave a Review</h4>
+      <form method="POST">
+        {% csrf_token %}
+        <div>
+          <label for="rating">Rating:</label>
+          <input type="number" name="rating" id="rating" min="1" max="5">
+        </div>
+        <div>
+          <label for="comment">Comment:</label>
+          <textarea name="comment" id="comment" rows="4"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    {% else %}
+      <p><a href="{% url 'login' %}">Login</a> to leave a review.</p>
+    {% endif %}
+  </div>
+{% endblock %}

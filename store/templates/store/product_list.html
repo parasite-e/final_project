@@ -1,0 +1,49 @@
+{% extends "base_generic.html" %}
+{% block content %}
+  <div class="container">
+    <h2>Products</h2>
+    <form method="GET">
+      <div>
+        <label for="size">Size:</label>
+        <select name="size" id="size">
+          <option value="">All</option>
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+        </select>
+      </div>
+      <div>
+        <label for="color">Color:</label>
+        <select name="color" id="color">
+          <option value="">All</option>
+          <option value="Red">Red</option>
+          <option value="Blue">Blue</option>
+          <option value="Green">Green</option>
+        </select>
+      </div>
+      <div>
+        <label for="sort_by">Sort By:</label>
+        <select name="sort_by" id="sort_by">
+          <option value="">None</option>
+          <option value="price">Price</option>
+          <option value="popularity">Popularity</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
+    <div class="row">
+      {% for product in products %}
+        <div class="col-md-4">
+          <div class="card">
+            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <p class="card-text">{{ product.price }}</p>
+              <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">Details</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
